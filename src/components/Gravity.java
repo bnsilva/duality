@@ -1,5 +1,7 @@
 package components;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 
 import entities.Entity;
@@ -15,6 +17,12 @@ public class Gravity implements Component {
 			e.setPosY(e.getPosY() + Constants.GRAVITY);
 			e.getCollisionBox().setY(e.getPosY());
 		}
+	}
+
+	@Override
+	public ArrayList<Integer> sendMsg() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

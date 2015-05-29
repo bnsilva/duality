@@ -12,8 +12,6 @@ public interface Component {
 	public void update(GameContainer gc, MyBasicGameState sbg, int delta, Entity e);
 	
 	//como default retorna um inteiro m que representa uma mensagem
-	public default ArrayList<Integer> sendMsg(){
-		return null;
-	}
+	public ArrayList<Integer> sendMsg();
 
 }
