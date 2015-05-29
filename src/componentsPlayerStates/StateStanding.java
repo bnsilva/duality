@@ -30,11 +30,11 @@ public class StateStanding implements Component{
 			
 			if(Constants.GRAVITY < 0){
 				e.replaceComponent("Collision", new CollisionInvert());
-				e.setPosY(e.getPosY()-140);
+				e.setPosY(e.getPosY()+140);
 				e.getCollisionBox().setY(e.getPosY());
 			}else{
 				e.replaceComponent("Collision", new CollisionNormal());
-				e.setPosY(e.getPosY()+140);
+				e.setPosY(e.getPosY()-140);
 				e.getCollisionBox().setY(e.getPosY());
 			}
 		}
