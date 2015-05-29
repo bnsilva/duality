@@ -11,20 +11,20 @@ import org.newdawn.slick.Input;
 
 import components.Component;
 
-public class StateJumping implements Component{
-	int timeJumping;
+public class StateDoubleJumping implements Component{
+	int timeDoubleJump;
 
 	@Override
 	public void update(GameContainer gc, MyBasicGameState sbg, int delta,
 			Entity e) {
-		if(gc.getInput().isKeyDown(Input.KEY_UP) && timeJumping <= Constants.MAX_TIME_JUMPING){
+		if(gc.getInput().isKeyDown(Input.KEY_UP) && timeDoubleJump <= Constants.MAX_TIME_DOUBLE_JUMPING){
 			if(!(e.getComponents().get("Collision").sendMsg().contains(2))){
 				e.setPosY(e.getPosY() + Constants.JUMP_VELOCITY);
 				e.getCollisionBox().setY(e.getPosY());
 			}
-			timeJumping++;
+			timeDoubleJump++;
 		} else{
-			e.replaceComponent("State", new StateFalling());
+			e.replaceComponent("State", new StateDoubleFalling());
 		}
 	}
 

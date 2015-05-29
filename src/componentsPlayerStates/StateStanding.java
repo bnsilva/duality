@@ -1,5 +1,7 @@
 package componentsPlayerStates;
 
+import java.util.ArrayList;
+
 import entities.Entity;
 import game.Constants;
 import gameStates.MyBasicGameState;
@@ -36,6 +38,12 @@ public class StateStanding implements Component{
 				e.getCollisionBox().setY(e.getPosY());
 			}
 		}
+	}
+
+	@Override
+	public ArrayList<Integer> sendMsg() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
