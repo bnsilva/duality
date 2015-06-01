@@ -15,18 +15,21 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Player extends Entity {
-	private Image i;
+	private float scale = 2.5f;
+	private Image img;
+	private Image imgFlipped;
 	
 	public Player(){
 		try {
-			i = new Image("res/img/Char.png");
+			img = new Image("res/img/Char.png", false, Image.FILTER_NEAREST);
+			img = img.getSubImage(9, 102, 12, 21);
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
 		
 		posX = Constants.WIDTH/2;
-		posY = Constants.HEIGHT/2 - i.getHeight();
-		collisionBox = new Rectangle(posX, posY, i.getWidth(), i.getHeight());
+		posY = Constants.HEIGHT/2 - img.getHeight() * scale;
+		collisionBox = new Rectangle(posX, posY, img.getWidth() * scale, img.getHeight() * scale);
 		
 		components.put("Gravity", new Gravity());
 		components.put("Collision", new CollisionNormal());
@@ -53,9 +56,12 @@ public class Player extends Entity {
 	@Override
 	public void onRender(GameContainer gc, MyBasicGameState sbg, Graphics g) {
 		if(Constants.GRAVITY>0){
-			g.drawImage(i, posX, posY);
+//			g.drawImage(i, posX, posY);
+			img.draw(posX, posY, scale);
 		}else{
-			g.drawImage(i.getFlippedCopy(false, true), posX, posY);
+			imgFlipped = img.getFlippedCopy(false, true);
+			imgFlipped.draw(posX, posY, scale);
+//			g.drawImage(i.getFlippedCopy(false, true), posX, posY);
 		}
 	}
 

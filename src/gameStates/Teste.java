@@ -10,6 +10,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import cena.CenaAleatorio;
+import cena.GeradorPickups;
 import entities.Entity;
 import entities.Ground;
 import entities.Player;
@@ -18,6 +19,10 @@ import game.Constants;
 
 public class Teste extends MyBasicGameState {
 	CenaAleatorio ca;
+	GeradorPickups gp;
+	
+	private int numOfElements = 30;
+	private int numOfPickups = 3;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
@@ -29,22 +34,20 @@ public class Teste extends MyBasicGameState {
 		int delta = 0;
 
 		entities.add(new Ground(0, Constants.HEIGHT / 2, 800, 0));
-
+		
+		gp = new GeradorPickups(numOfElements);
 		ca = new CenaAleatorio();
-		ca.gerarCenario(gc, this, delta);
-		ca.gerarCenario(gc, this, delta);
-		ca.gerarCenario(gc, this, delta);
-		ca.gerarCenario(gc, this, delta);
-		ca.gerarCenario(gc, this, delta);
-		ca.gerarCenario(gc, this, delta);
-		ca.gerarCenario(gc, this, delta);
+		
+		ca.gerarCenario(gc, this, delta, numOfElements);
+		gp.gerarPickups(this, numOfPickups);
 
 		entities.add(new Player());
-		cam.setTarget(entities.get(entities.size() - 1));
-		for (Entity e : entities) {
-			System.out.println(e.toString());
-		}
-		System.out.println("" + entities.size());
+		cam.setTarget(entities.get(entities.size() - 1));		
+
+//		for (Entity e : entities) {
+//			System.out.println(e.toString());
+//		}
+//		System.out.println("" + entities.size());
 	}
 
 	public ArrayList<Entity> getEntities() {
@@ -81,7 +84,6 @@ public class Teste extends MyBasicGameState {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 
-		System.out.println();
 		for (Entity e : entities) {
 			e.update(gc, this, delta);
 		}

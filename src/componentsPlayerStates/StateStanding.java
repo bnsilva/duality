@@ -23,7 +23,6 @@ public class StateStanding implements Component {
 		}
 
 		if (gc.getInput().isKeyPressed(Input.KEY_DOWN)) {
-			System.out.println(" "+gc.getInput().isKeyRepeatEnabled());
 			Constants.GRAVITY *= -1;
 			Constants.JUMP_VELOCITY *= -1;
 

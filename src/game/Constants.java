@@ -14,4 +14,9 @@ public class Constants {
 	public static float VEL_CAM = 2;
 	
 	public static float SPEED_X = 2;
+	
+	public static float MIN_GROUND_HEIGHT = (HEIGHT / 2) - 150;
+	public static float MAX_GROUND_HEIGHT = (HEIGHT / 2) + 150;
+	public static float MIN_GROUND_WIDTH = 100;
+	public static float MAX_GROUND_WIDTH = 500;
 }

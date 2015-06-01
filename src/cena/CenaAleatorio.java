@@ -12,26 +12,42 @@ import java.util.Random;
 public class CenaAleatorio {
 	private float posX;
 	private float posY;
+	private float tamX;
+	private float tamY;
 
 	public CenaAleatorio() {
 		//posiçao inicial
-		posX = 800; 
+		posX = Constants.WIDTH; 
 		posY = Constants.HEIGHT / 2;
 	}
 
-	public void gerarCenario(GameContainer gc, MyBasicGameState sbg, int delta) {
-		Random r = new Random();
-		float tamX = r.nextFloat() * Constants.WIDTH;
-		float tamY = r.nextFloat() * Constants.HEIGHT;
-
-		sbg.addEntity(new Ground(posX + 1, posY, tamX - 1, 0));
-		posX += tamX;
-
-		if (posY > tamY) {
-			sbg.addEntity(new Wall(posX, tamY - 1, 0, posY - tamY));
-		} else {
-			sbg.addEntity(new Wall(posX, posY + 1, 0, tamY - posY));
+	public void gerarCenario(GameContainer gc, MyBasicGameState sbg, int delta, int numOfElements) {
+		for (int i = 0; i < numOfElements; i++) {
+			Random r = new Random();
+			tamX = r.nextFloat() * Constants.WIDTH;
+			tamY = r.nextFloat() * Constants.HEIGHT;
+			
+			while (tamX < Constants.MIN_GROUND_WIDTH || tamX > Constants.MAX_GROUND_WIDTH){
+				tamX = r.nextFloat() * Constants.WIDTH;
+			}
+			
+			while (tamY < Constants.MIN_GROUND_HEIGHT || tamY > Constants.MAX_GROUND_HEIGHT){
+				tamY = r.nextFloat() * Constants.HEIGHT;
+			}
+	
+			sbg.addEntity(new Ground(posX + 1, posY, tamX - 1, 0));
+			posX += tamX;
+	
+			if (posY > tamY) {
+				sbg.addEntity(new Wall(posX, tamY - 1, 0, posY - tamY));
+			} else {
+				sbg.addEntity(new Wall(posX, posY + 1, 0, tamY - posY));
+			}
+			posY = tamY;
+			
+			GeradorPickups.groundPosX[i] = posX;
+			GeradorPickups.groundPosY[i] = posY;
 		}
-		posY = tamY;
 	}
+	
 }
