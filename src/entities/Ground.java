@@ -15,7 +15,7 @@ public class Ground extends Entity{
 		this.posX = posX;
 		this.posY = posY;
 		collisionBox = new Rectangle(posX, posY, tamX, tamY);
-		r = new Rectangle(posX, posY, tamX, Constants.HEIGHT);
+		r = new Rectangle(posX, posY, tamX, Constants.HEIGHT - posY + 100);
 	}
 
 	@Override

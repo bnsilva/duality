@@ -18,6 +18,10 @@ public class StateStanding implements Component {
 	@Override
 	public void update(GameContainer gc, MyBasicGameState sbg, int delta,
 			Entity e) {
+		if (!(e.getComponents().get("Collision").sendMsg().contains(1))){
+			e.replaceComponent("State", new StateFalling());
+		}
+		
 		if (gc.getInput().isKeyPressed(Input.KEY_UP)) {
 			e.replaceComponent("State", new StateJumping());
 		}

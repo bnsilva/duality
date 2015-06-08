@@ -45,18 +45,20 @@ public class CollisionInvert implements Component {
 				}
 
 			} else if (entity.toString() == "Wall") {
-				if (e.getPosX() <= entity.getPosX()
-						+ entity.getCollisionBox().getWidth()
-						&& e.getPosX() + 5 >= entity.getPosX()
-								+ entity.getCollisionBox().getWidth()) {
-					msg.add(3);
+				if (e.getCollisionBox().intersects(entity.getCollisionBox())) {
+					if (e.getPosX() <= entity.getPosX()
+							+ entity.getCollisionBox().getWidth()
+							&& e.getPosX() + 5 >= entity.getPosX()
+									+ entity.getCollisionBox().getWidth()) {
+						msg.add(3);
 
-				} else if (e.getPosX() + e.getCollisionBox().getWidth() >= entity
-						.getPosX()
-						&& e.getPosX() + e.getCollisionBox().getWidth() <= entity
-								.getPosX() + 5) {
-					msg.add(4);
+					} else if (e.getPosX() + e.getCollisionBox().getWidth() >= entity
+							.getPosX()
+							&& e.getPosX() + e.getCollisionBox().getWidth() <= entity
+									.getPosX() + 5) {
+						msg.add(4);
 
+					}
 				}
 			}
 		}

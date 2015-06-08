@@ -35,13 +35,13 @@ public class CenaAleatorio {
 				tamY = r.nextFloat() * Constants.HEIGHT;
 			}
 	
-			sbg.addEntity(new Ground(posX + 1, posY, tamX - 1, 0));
+			sbg.addEntity(new Ground(posX, posY, tamX, 0));
 			posX += tamX;
 	
 			if (posY > tamY) {
-				sbg.addEntity(new Wall(posX, tamY - 1, 0, posY - tamY));
+				sbg.addEntity(new Wall(posX, tamY + 2, 0, posY - tamY - 2));
 			} else {
-				sbg.addEntity(new Wall(posX, posY + 1, 0, tamY - posY));
+				sbg.addEntity(new Wall(posX, posY + 2, 0, tamY - posY - 2));
 			}
 			posY = tamY;
 			
