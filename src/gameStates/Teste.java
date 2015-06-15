@@ -78,11 +78,18 @@ public class Teste extends MyBasicGameState {
 				break;
 			}
 		}
+		
+		g.setColor(Color.white);
+		g.drawString("Aperte ESPAÇO para pausar o jogo", 500, 100);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
+		
+		if (gc.getInput().isKeyPressed(Input.KEY_SPACE)){
+			sbg.enterState(2);
+		}
 
 		for (Entity e : entities) {
 			e.update(gc, this, delta);
@@ -99,6 +106,6 @@ public class Teste extends MyBasicGameState {
 
 	@Override
 	public int getID() {
-		return 0;
+		return 1;
 	}
 }

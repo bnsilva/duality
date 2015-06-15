@@ -1,7 +1,5 @@
 package game;
 
-import gameStates.Teste;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
@@ -14,7 +12,10 @@ public class Game extends StateBasedGame{
 
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
-		this.addState(new Teste());
+		this.addState(new gameStates.Teste());
+		this.addState(new gameStates.Menu());
+		this.addState(new gameStates.Paused());
+		
 		this.enterState(0);
 	}
 

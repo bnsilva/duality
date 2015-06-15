@@ -2,8 +2,8 @@ package game;
 
 public class Constants {
 	
-	public static float WIDTH = 800.0f;
-	public static float HEIGHT = 640.0f;
+	public static int WIDTH = 800;
+	public static int HEIGHT = 600;
 
 	public static float GRAVITY = 2.0f;
 
