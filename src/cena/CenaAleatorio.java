@@ -39,9 +39,9 @@ public class CenaAleatorio {
 			posX += tamX;
 	
 			if (posY > tamY) {
-				sbg.addEntity(new Wall(posX, tamY + 2, 0, posY - tamY - 2));
+				sbg.addEntity(new Wall(posX, tamY + 2, 0, posY - tamY - 4));
 			} else {
-				sbg.addEntity(new Wall(posX, posY + 2, 0, tamY - posY - 2));
+				sbg.addEntity(new Wall(posX, posY + 2, 0, tamY - posY - 4));
 			}
 			posY = tamY;
 			
