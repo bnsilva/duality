@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.Arrays;
+
 import gameStates.MyBasicGameState;
 
 import org.newdawn.slick.Color;
@@ -10,9 +12,11 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 public class Pickup extends Entity{
+	private static int id;
+	
 	private Shape circle;
 	private int radius = 10;
-
+	
 	public Pickup(float posX, float posY) {
 		this.posX = posX;
 		this.posY = posY;
@@ -29,13 +33,16 @@ public class Pickup extends Entity{
 
 	@Override
 	public void onRender(GameContainer gc, MyBasicGameState sbg, Graphics g) {
-		g.fill(circle);
-		g.setColor(new Color(Color.yellow));
-		g.draw(circle);
+			g.fill(circle);
+			g.setColor(new Color(Color.yellow));
+			g.draw(circle);
 	}
 	
 	public String toString() {
 		return "Pickup";
 	}
-
+	
+	public static int getId(){
+		return id;
+	}
 }

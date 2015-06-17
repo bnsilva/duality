@@ -81,7 +81,7 @@ public class Menu extends BasicGameState{
 			imgSair.setAlpha(1.0f);
 			
 			if (gc.getInput().isMousePressed(0)){
-				System.exit(0);
+				gc.exit();
 			}
 		} else if (isHovering(btnBGM)){
 			imgBGMOn.setAlpha(1.0f);

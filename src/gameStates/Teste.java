@@ -22,7 +22,11 @@ public class Teste extends MyBasicGameState {
 	GeradorPickups gp;
 	
 	private int numOfElements = 30;
-	private int numOfPickups = 3;
+	private int numOfPickups = 30;
+	
+	private static int timer;
+	private static int timerX = 720;
+	private static int timerY = 60;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
@@ -81,6 +85,8 @@ public class Teste extends MyBasicGameState {
 		
 		g.setColor(Color.white);
 		g.drawString("Aperte ESPAÇO para pausar o jogo", 500, 100);
+		
+		g.drawString("" + timer/1000, timerX, timerY);
 	}
 
 	@Override
@@ -102,10 +108,28 @@ public class Teste extends MyBasicGameState {
 				cam.setTarget(entities.get(0));
 			}
 		}
+		
+		timer += delta;
 	}
 
 	@Override
 	public int getID() {
 		return 1;
+	}
+	
+	public static int getTimerX(){
+		return timerX;
+	}
+	
+	public static void setTimerX(int X){
+		timerX = X;
+	}
+	
+	public static int getTimerY(){
+		return timerY;
+	}
+	
+	public static void setTimerY(int Y){
+		timerY = Y;
 	}
 }

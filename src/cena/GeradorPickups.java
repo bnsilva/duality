@@ -25,13 +25,12 @@ public class GeradorPickups {
 		
 		for (int i = 0; i < numOfPickups; i++){
 			int randIndex = rand.nextInt(numOfElements);
-			int randPosX = rand.nextInt(100);
+			int randPosX = rand.nextInt(200 - 10);
 			
 //			System.out.println("randIndex " + i + ": " + randIndex);
 //			System.out.println("randPosX " + i + ": " + randPosX);
 			sbg.addEntity(new Pickup(groundPosX[randIndex] + 10 + randPosX, groundPosY[randIndex] - 10));
 		}
-		
 	}
 
 }

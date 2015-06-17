@@ -63,7 +63,7 @@ public class CollisionNormal implements Component {
 		for (Entity entity : sbg.getEntities()){
 			if (entity.toString() == "Pickup"){
 				if (e.getCollisionBox().intersects(entity.getCollisionBox())){
-					System.out.println("Colisão com pickup detectada");
+					msg.add(5);
 				}
 			}
 		}

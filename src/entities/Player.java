@@ -51,6 +51,10 @@ public class Player extends Entity {
 				collisionBox.setX(posX);
 			}
 		}
+		
+		if (components.get("Collision").sendMsg().contains(5)){
+			System.out.println("Pickup coletado");
+		}
 	}
 
 	@Override
