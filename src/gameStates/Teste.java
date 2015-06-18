@@ -16,17 +16,31 @@ import entities.Ground;
 import entities.Player;
 import game.Camera;
 import game.Constants;
+import game.Game;
 
 public class Teste extends MyBasicGameState {
 	CenaAleatorio ca;
 	GeradorPickups gp;
 	
-	private int numOfElements = 30;
-	private int numOfPickups = 30;
+	private int numOfElements = 10;
+	private int numOfPickups = 10;
 	
-	private static int timer;
-	private static int timerX = 720;
-	private static int timerY = 60;
+	private String timeStr;
+	private int timer;
+	private int timerX = 720;
+	private int timerY = 60;
+	private int scoreX = 720;
+	private int scoreY = 80;
+	private int count = 0;
+	private float bonus = 0;
+	
+	private Entity player;
+	
+	private static int hours = 0;
+	private static int minutes = 0;
+	private static int seconds = 0;
+	private static int score = 0;
+	private static int timeElapsed;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
@@ -46,8 +60,13 @@ public class Teste extends MyBasicGameState {
 		gp.gerarPickups(this, numOfPickups);
 
 		entities.add(new Player());
-		cam.setTarget(entities.get(entities.size() - 1));		
-
+		
+		timeStr = "00:00:00";
+		
+		player = entities.get(entities.size() - 1);
+		
+		cam.setTarget(player);
+		
 //		for (Entity e : entities) {
 //			System.out.println(e.toString());
 //		}
@@ -68,8 +87,8 @@ public class Teste extends MyBasicGameState {
 			if (!(e.toString() == "Player")) {
 				e.render(gc, this, g);
 				// linhas debug
-				g.setColor(Color.red);
-				g.draw(e.getCollisionBox());
+//				g.setColor(Color.red);
+//				g.draw(e.getCollisionBox());
 			}
 		}
 		for (Entity e : entities) {
@@ -77,8 +96,8 @@ public class Teste extends MyBasicGameState {
 			if (e.toString() == "Player") {
 				e.render(gc, this, g);
 				// linhas debug
-				g.setColor(Color.red);
-				g.draw(e.getCollisionBox());
+//				g.setColor(Color.red);
+//				g.draw(e.getCollisionBox());
 				break;
 			}
 		}
@@ -86,12 +105,21 @@ public class Teste extends MyBasicGameState {
 		g.setColor(Color.white);
 		g.drawString("Aperte ESPAÇO para pausar o jogo", 500, 100);
 		
-		g.drawString("" + timer/1000, timerX, timerY);
+		g.setColor(Color.red);
+		g.drawString(timeStr, timerX, timerY);
+		g.drawString("" + score, scoreX, scoreY);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
+		
+		count++;
+		if (count % (5 * 60) == 0){
+			//A cada 5 segundos gera uma nova parte do cenário e novos pickups;
+			ca.gerarCenario(gc, this, delta, numOfElements);
+			gp.gerarPickups(this, numOfPickups);
+		}
 		
 		if (gc.getInput().isKeyPressed(Input.KEY_SPACE)){
 			sbg.enterState(2);
@@ -105,11 +133,25 @@ public class Teste extends MyBasicGameState {
 			if (cam.hasTarget()) {
 				cam.setTarget(null);
 			} else {
-				cam.setTarget(entities.get(0));
+				cam.setTarget(player);
 			}
 		}
 		
 		timer += delta;
+		timeElapsed += delta;
+		
+		//sincroniza a pos do timer e do score na tela com a pos do personagem
+		timerX = (int) player.getPosX() + 320;
+		timerY = (int) player.getPosY() - 190;
+		scoreX = (int) player.getPosX() + 325;
+		scoreY = (int) player.getPosY() - 170;
+		
+		calcTime();
+		calcScore();
+		
+		if (Player.isGameOver()){
+			Game.enterState(sbg, 3);
+		}
 	}
 
 	@Override
@@ -117,19 +159,42 @@ public class Teste extends MyBasicGameState {
 		return 1;
 	}
 	
-	public static int getTimerX(){
-		return timerX;
+	public void calcTime(){
+		//timer  = delta; 1000 delta = 1 seg
+		seconds = timer / 1000;
+
+		timeStr = (hours + ":" + minutes + ":" + seconds);
+		
+		if (seconds > 59){
+			timer = 0;
+			minutes++;
+		}
+		
+		if (minutes > 59){
+			minutes = 0;
+			hours++;
+		}
 	}
 	
-	public static void setTimerX(int X){
-		timerX = X;
+	public void calcScore(){
+		bonus+= 0.2f;
+		score = (int) ((timeElapsed/1000 * 10) * (minutes + 1) + bonus);
 	}
 	
-	public static int getTimerY(){
-		return timerY;
+	public static int getScore(){
+		return score;
 	}
 	
-	public static void setTimerY(int Y){
-		timerY = Y;
+	public static void resetScore(){
+		score = 0;
+		timeElapsed = 0;
+	}
+	
+	public static int getMinutes(){
+		return minutes;
+	}
+	
+	public static int getSeconds(){
+		return seconds;
 	}
 }

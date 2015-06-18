@@ -16,6 +16,7 @@ public class CollisionNormal implements Component {
 	// m=2 => colidiu com o teto
 	// m=3 => colidiu parede esquerda
 	// m=4 => colidiu parede direita
+	// m=5 => colidiu com um pickup
 
 	public CollisionNormal() {
 		msg = new ArrayList<Integer>();

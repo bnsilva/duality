@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SlickException {
 		System.setProperty("org.lwjgl.librarypath", new File(new File(System.getProperty("user.dir"), "native"), LWJGLUtil.getPlatformName()).getAbsolutePath());
 		
 		try{

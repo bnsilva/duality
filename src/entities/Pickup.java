@@ -1,7 +1,5 @@
 package entities;
 
-import java.util.Arrays;
-
 import gameStates.MyBasicGameState;
 
 import org.newdawn.slick.Color;
@@ -12,7 +10,6 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 public class Pickup extends Entity{
-	private static int id;
 	
 	private Shape circle;
 	private int radius = 10;
@@ -41,8 +38,5 @@ public class Pickup extends Entity{
 	public String toString() {
 		return "Pickup";
 	}
-	
-	public static int getId(){
-		return id;
-	}
+
 }

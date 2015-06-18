@@ -16,6 +16,7 @@ public class CollisionInvert implements Component {
 	// m=2 => colidiu com o teto
 	// m=3 => colidiu parede esquerda
 	// m=4 => colidiu parede direita
+	// m=5 => colidiu com um pickup
 
 	public CollisionInvert() {
 		msg = new ArrayList<Integer>();
@@ -62,7 +63,14 @@ public class CollisionInvert implements Component {
 				}
 			}
 		}
-
+		
+		for (Entity entity : sbg.getEntities()){
+			if (entity.toString() == "Pickup"){
+				if (e.getCollisionBox().intersects(entity.getCollisionBox())){
+					msg.add(5);
+				}
+			}
+		}
 	}
 
 	@Override

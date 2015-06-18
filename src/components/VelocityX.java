@@ -21,7 +21,6 @@ public class VelocityX implements Component{
 
 	@Override
 	public ArrayList<Integer> sendMsg() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

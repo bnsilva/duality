@@ -14,6 +14,9 @@ public class CenaAleatorio {
 	private float posY;
 	private float tamX;
 	private float tamY;
+	
+	public static float[] groundPosX;
+	public static float[] groundPosY;
 
 	public CenaAleatorio() {
 		//posiçao inicial
@@ -22,6 +25,14 @@ public class CenaAleatorio {
 	}
 
 	public void gerarCenario(GameContainer gc, MyBasicGameState sbg, int delta, int numOfElements) {
+		if (groundPosX.length < numOfElements){
+			groundPosX = new float[numOfElements];
+		}
+		
+		if (groundPosY.length < numOfElements){
+			groundPosY = new float[numOfElements];
+		}
+		
 		for (int i = 0; i < numOfElements; i++) {
 			Random r = new Random();
 			tamX = r.nextFloat() * Constants.WIDTH;
@@ -39,15 +50,23 @@ public class CenaAleatorio {
 			posX += tamX;
 	
 			if (posY > tamY) {
-				sbg.addEntity(new Wall(posX, tamY + 2, 0, posY - tamY - 2));
+				sbg.addEntity(new Wall(posX, tamY + 2, 0, posY - tamY - 4));
 			} else {
-				sbg.addEntity(new Wall(posX, posY + 2, 0, tamY - posY - 2));
+				sbg.addEntity(new Wall(posX, posY + 2, 0, tamY - posY - 4));
 			}
 			posY = tamY;
 			
-			GeradorPickups.groundPosX[i] = posX;
-			GeradorPickups.groundPosY[i] = posY;
+			groundPosX[i] = posX;
+			groundPosY[i] = posY;
 		}
+	}
+	
+	public static float getGroundPosX(int index){
+		return groundPosX[index];
+	}
+	
+	public static float getGroundPosY(int index){
+		return groundPosY[index];
 	}
 	
 }

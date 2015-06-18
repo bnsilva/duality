@@ -19,4 +19,9 @@ public class Constants {
 	public static float MAX_GROUND_HEIGHT = (HEIGHT / 2) + 200;
 	public static float MIN_GROUND_WIDTH = 200;
 	public static float MAX_GROUND_WIDTH = 600;
+	
+	public static void reset(){
+		GRAVITY = 2.0f;
+		JUMP_VELOCITY = -3.5f;
+	}
 }

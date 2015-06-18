@@ -1,9 +1,9 @@
 package gameStates;
 
-import game.Audio;
+import entities.Player;
 import game.Constants;
-import uiElements.*;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -11,41 +11,37 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Menu extends BasicGameState{
-	private Audio audio;
-	
+import uiElements.Button;
+
+public class GameOver extends BasicGameState{
 	private Image imgBG;
-	private Image imgJogar;
-	private Image imgSair;
-	private Image imgBGMOn;
-	private Image imgBGMOff;
 	private Image imgLogo;
+	private Image imgVoltar;
+	private Image imgSair;
+	
+	private String text;
+	private String time;
+	private String score;
 	
 	private int mouseX;
 	private int mouseY;
 	
-	private Button btnJogar;
+	private Button btnVoltar;
 	private Button btnSair;
-	private Button btnBGM;
 
-	public Menu() {
+	public GameOver() {
 	}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		imgBG = new Image("res/img/ui/bg1.png");
 		imgLogo = new Image("res/img/ui/Duality_logo_alt.png");
-		imgJogar = new Image("res/img/ui/button_jogar.png");
-		imgBGMOn = new Image("res/img/ui/button_musica.png");
-		imgBGMOff = new Image("res/img/ui/button_musica_off.png");
+		
+		imgVoltar = new Image("res/img/ui/button_menu.png");
 		imgSair = new Image("res/img/ui/button_sair.png");
 		
-		btnJogar = new Button(imgJogar, Constants.WIDTH/2, Constants.HEIGHT/2 + 50);
-		btnBGM = new Button(imgBGMOn, Constants.WIDTH/2, Constants.HEIGHT/2 + 125);
+		btnVoltar = new Button(imgVoltar, Constants.WIDTH/2, Constants.HEIGHT/2 + 125);
 		btnSair = new Button(imgSair, Constants.WIDTH/2, Constants.HEIGHT/2 + 200);
-		
-		audio = new Audio();
-		audio.bgmLoop();
 	}
 
 	@Override
@@ -54,9 +50,13 @@ public class Menu extends BasicGameState{
 		imgBG.drawCentered(Constants.WIDTH/2, Constants.HEIGHT/2);
 		imgLogo.drawCentered(Constants.WIDTH/2, Constants.HEIGHT/2 - 150);
 		
-		btnJogar.render();
+		btnVoltar.render();
 		btnSair.render();
-		btnBGM.render();
+		
+		g.setColor(Color.white);
+		g.drawString(text, Constants.WIDTH/2 - 40, Constants.HEIGHT/2 - 25);
+		g.drawString(time, Constants.WIDTH/2 - 210, Constants.HEIGHT/2);
+		g.drawString(score, Constants.WIDTH/2 - 90, Constants.HEIGHT/2 + 25);
 	}
 
 	@Override
@@ -64,17 +64,22 @@ public class Menu extends BasicGameState{
 		mouseX = gc.getInput().getMouseX();
 		mouseY = gc.getInput().getMouseY();
 		
+		text = "Game Over";
+		time = ("Você sobreviveu por " + Teste.getMinutes() + " minuto(s) e " + Teste.getSeconds() + " segundo(s)");
+		score = ("e obteve " + Teste.getScore() + " pontos");
+		
 		//Esmaecer as opções do menu para dar um efeito de "Highlight"
-		imgJogar.setAlpha(0.7f);
-		imgBGMOn.setAlpha(0.7f);
-		imgBGMOff.setAlpha(0.7f);
+		imgVoltar.setAlpha(0.7f);
 		imgSair.setAlpha(0.7f);
 		
-		if (isHovering(btnJogar)){
-			imgJogar.setAlpha(1.0f);	//Highlight ou seleção da opção
+		if (isHovering(btnVoltar)){
+			imgVoltar.setAlpha(1.0f);	//Highlight ou seleção da opção
 			
 			if (gc.getInput().isMousePressed(0)){
-				sbg.enterState(1);
+				gc.reinit();
+				Constants.reset();
+				Player.resetGame();
+				sbg.enterState(0);
 			}
 		} else if (isHovering(btnSair)){
 			imgSair.setAlpha(1.0f);
@@ -82,29 +87,12 @@ public class Menu extends BasicGameState{
 			if (gc.getInput().isMousePressed(0)){
 				gc.exit();
 			}
-		} else if (isHovering(btnBGM)){
-			imgBGMOn.setAlpha(1.0f);
-			imgBGMOff.setAlpha(1.0f);
-			
-			if (gc.getInput().isMousePressed(0)){
-				if (audio.bgmPlaying()){		//Verifica se a musica está tocando e liga ou desliga-a
-					audio.bgmStop();
-				} else
-					audio.bgmLoop();
-			}
 		}
-		
-		if (audio.bgmPlaying() && btnBGM.getImg() == imgBGMOff){
-			//altera a img do botão para indicar se a música está tocando ou não
-			btnBGM.changeImg(imgBGMOn);
-		} else if (!audio.bgmPlaying() && btnBGM.getImg() == imgBGMOn)
-			btnBGM.changeImg(imgBGMOff);
-		
 	}
 
 	@Override
 	public int getID() {
-		return 0;
+		return 3;
 	}
 	
 	public boolean isHovering(Button btn){
@@ -115,5 +103,4 @@ public class Menu extends BasicGameState{
 		}else
 			return false;
 	}
-
 }

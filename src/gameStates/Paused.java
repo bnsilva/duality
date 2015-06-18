@@ -1,5 +1,6 @@
 package gameStates;
 
+import game.Audio;
 import game.Constants;
 
 import org.newdawn.slick.Color;
@@ -14,6 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import uiElements.Button;
 
 public class Paused extends BasicGameState{
+	private Audio audio;
 	
 	private Image imgBG;
 	private Image imgLogo;
@@ -48,6 +50,9 @@ public class Paused extends BasicGameState{
 		btnVoltar = new Button(imgVoltar, Constants.WIDTH/2, Constants.HEIGHT/2 + 50);
 		btnBGM = new Button(imgBGMOn, Constants.WIDTH/2, Constants.HEIGHT/2 + 125);
 		btnSair = new Button(imgSair, Constants.WIDTH/2, Constants.HEIGHT/2 + 200);
+		
+		audio = new Audio();
+		audio.bgmLoop();
 	}
 
 	@Override
@@ -96,17 +101,17 @@ public class Paused extends BasicGameState{
 			imgBGMOff.setAlpha(1.0f);
 			
 			if (gc.getInput().isMousePressed(0)){
-				if (Menu.bgm.playing()){	//Verifica se a musica está tocando e liga ou desliga-a
-					Menu.bgm.stop();
+				if (audio.bgmPlaying()){	//Verifica se a musica está tocando e liga ou desliga-a
+					audio.bgmStop();
 				} else
-					Menu.bgm.loop();
+					audio.bgmLoop();
 			}
 	}
 		
-		if (Menu.bgm.playing() && btnBGM.getImg() == imgBGMOff){
+		if (audio.bgmPlaying() && btnBGM.getImg() == imgBGMOff){
 			//altera a img do botão para indicar se a música está tocando ou não
 			btnBGM.changeImg(imgBGMOn);
-		} else if (!Menu.bgm.playing() && btnBGM.getImg() == imgBGMOn)
+		} else if (!audio.bgmPlaying() && btnBGM.getImg() == imgBGMOn)
 			btnBGM.changeImg(imgBGMOff);
 	}
 

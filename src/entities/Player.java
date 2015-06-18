@@ -15,9 +15,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Player extends Entity {
-	private float scale = 2.5f;
+	private float scale = 3.0f;
 	private Image img;
 	private Image imgFlipped;
+	
+	private int count;
+	
+	private static boolean gameOver = false;
 	
 	public Player(){
 		try {
@@ -39,6 +43,14 @@ public class Player extends Entity {
 
 	@Override
 	public void onUpdate(GameContainer gc, MyBasicGameState sbg, int delta) {
+		
+		if (components.get("Collision").sendMsg().contains(4)){
+			count++;
+			if (count % (3 * 60) == 0){		//Game Over se o personagem ficar preso na parede por 3 segundos.
+				gameOver = true;
+			}
+		}
+		
 		if(gc.getInput().isKeyDown(Input.KEY_RIGHT)){
 			if(!(components.get("Collision").sendMsg().contains(4))){
 				posX += 2;
@@ -53,7 +65,8 @@ public class Player extends Entity {
 		}
 		
 		if (components.get("Collision").sendMsg().contains(5)){
-			System.out.println("Pickup coletado");
+			gameOver = true;
+			
 		}
 	}
 
@@ -72,5 +85,13 @@ public class Player extends Entity {
 	@Override
 	public String toString() {
 		return "Player";
+	}
+	
+	public static boolean isGameOver(){
+		return gameOver;
+	}
+	
+	public static void resetGame(){
+		gameOver = false;
 	}
 }
